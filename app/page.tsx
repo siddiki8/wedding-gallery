@@ -8,7 +8,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <header className="bg-white border-b py-4">
         <div className="container mx-auto px-4 text-center">
-          <div className="relative w-40 h-40 mx-auto">
+          <div className="relative w-60 h-60 mx-auto">
             <Image 
               src="/logo.png" 
               alt="Wedding Logo" 
@@ -17,7 +17,6 @@ export default function Home() {
               priority
             />
           </div>
-          <p className="text-muted-foreground mt-4 text-lg">Wedding Gallery</p>
         </div>
       </header>
 
