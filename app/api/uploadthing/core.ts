@@ -33,29 +33,37 @@ export const ourFileRouter = {
       const isVideo = file.type.startsWith('video/');
       
       try {
+        // Use file.url for now, but prepare for migration to file.ufsUrl
+        const fileUrl = file.ufsUrl || file.url;
+        
+        if (!fileUrl) {
+          throw new Error("No URL available for uploaded file");
+        }
+        
         // Save to database using the Media model
         const savedMedia = await db.media.create({
           data: {
-            url: file.url,
+            url: fileUrl,
             name: metadata.userName || "Unknown User",
             type: isVideo ? "video" : "image",
             fileType: file.type,
             size: file.size,
             // For videos, we'll update thumbnails later if needed
-            thumbnail: isVideo ? null : null,
+            thumbnail: null,
           },
         });
         
-        console.log(`Successfully saved ${isVideo ? 'video' : 'image'} to database:`, savedMedia.id);
+        console.log(`Successfully saved ${isVideo ? 'video' : 'image'} to database:`, savedMedia);
         
         return { 
           uploadedBy: metadata.userName,
           mediaId: savedMedia.id,
-          mediaType: isVideo ? "video" : "image"
+          mediaType: isVideo ? "video" : "image",
+          url: fileUrl
         };
       } catch (dbError) {
         console.error("Database error:", dbError);
-        return { error: "Failed to save to database" };
+        throw new Error("Failed to save to database: " + (dbError as Error).message);
       }
     }),
 } satisfies FileRouter
