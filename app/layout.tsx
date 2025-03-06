@@ -7,11 +7,13 @@ import { Toaster } from "sonner"
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+  display: "swap",
 })
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
+  display: "swap",
 })
 
 export const metadata: Metadata = {

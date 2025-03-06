@@ -42,7 +42,7 @@ export default async function MessagesPage() {
 
       <footer className="bg-muted py-6">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-muted-foreground">Nickolas & Jasmine — June 15, 2024</p>
+          <p className="text-muted-foreground">Nickolas & Jasmine — June 28, 2025</p>
         </div>
       </footer>
     </div>

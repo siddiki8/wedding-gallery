@@ -1,7 +1,7 @@
 "use server"
 
 import { db } from "@/lib/db"
-import type { Message, Photo } from "@/lib/types"
+import type { Message, Media } from "@/lib/types"
 import { revalidatePath } from "next/cache"
 
 export async function saveEmail(data: { name: string; email: string }) {
@@ -64,15 +64,15 @@ export async function saveMessage(data: { content: string; name: string }): Prom
 }
 
 /**
- * Toggle like status for a photo
+ * Toggle like status for a media item (photo or video)
  */
-export async function toggleLikePhoto(photoId: string): Promise<{ success: boolean; likes?: number; error?: string }> {
+export async function toggleLikePhoto(mediaId: string): Promise<{ success: boolean; likes: number; error?: string }> {
   try {
-    // Use a raw query to update the likes count
+    // Use a raw query to update the likes count in the Media table
     const result = await db.$queryRaw`
-      UPDATE "Photo" 
+      UPDATE "Media" 
       SET "likes" = "likes" + 1 
-      WHERE "id" = ${photoId}
+      WHERE "id" = ${mediaId}
       RETURNING "likes"
     `;
     
@@ -82,7 +82,7 @@ export async function toggleLikePhoto(photoId: string): Promise<{ success: boole
       : null;
     
     if (updatedLikes === null) {
-      return { success: false, error: "Photo not found" };
+      return { success: false, likes: 0, error: "Media not found" };
     }
     
     // Revalidate the gallery page
@@ -90,7 +90,7 @@ export async function toggleLikePhoto(photoId: string): Promise<{ success: boole
     
     return { success: true, likes: updatedLikes };
   } catch (error) {
-    console.error("Error liking photo:", error);
-    return { success: false, error: "Failed to like photo" };
+    console.error("Error liking media:", error);
+    return { success: false, likes: 0, error: "Failed to like media" };
   }
 } 

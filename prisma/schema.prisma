@@ -7,10 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Photo {
+model Media {
   id        String   @id @default(cuid())
   url       String
   name      String
+  type      String   @default("image") // "image" or "video"
+  fileType  String?  // MIME type (e.g., "image/jpeg", "video/mp4")
+  thumbnail String?  // For video thumbnails
+  size      Int?     // File size in bytes (mainly for videos)
+  duration  Int?     // Video duration in seconds
   likes     Int      @default(0)
   createdAt DateTime @default(now())
 }

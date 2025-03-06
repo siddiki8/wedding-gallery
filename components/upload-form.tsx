@@ -11,10 +11,11 @@ import { Input } from "@/components/ui/input"
 import { UploadDropzone } from "@uploadthing/react"
 import { toast } from "sonner"
 import { saveEmail } from "@/app/actions"
+import { Camera, Film } from "lucide-react"
 import type { OurFileRouter } from "@/app/api/uploadthing/core"
 
-// Define the input type for the imageUploader endpoint
-type ImageUploaderInput = {
+// Define the input type for the mediaUploader endpoint
+type MediaUploaderInput = {
   name: string;
 };
 
@@ -122,7 +123,7 @@ export function UploadForm() {
     return (
       <div className="text-center py-8 space-y-4">
         <h3 className="text-2xl font-medium">Thank You!</h3>
-        <p className="text-muted-foreground">Your photos have been uploaded successfully.</p>
+        <p className="text-muted-foreground">Your media has been uploaded successfully.</p>
         <div className="flex justify-center gap-4 mt-6">
           <Button onClick={() => router.push("/gallery")}>View Gallery</Button>
           <Button
@@ -144,7 +145,7 @@ export function UploadForm() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-lg font-medium">Upload Your Photos</h3>
+            <h3 className="text-lg font-medium">Upload Your Media</h3>
             <p className="text-sm text-muted-foreground">
               Uploading as <span className="font-medium">{userData.name}</span>
             </p>
@@ -163,11 +164,22 @@ export function UploadForm() {
           )}
         </div>
 
-        <UploadDropzone<OurFileRouter, "imageUploader">
-          endpoint="imageUploader"
+        <div className="flex items-center justify-center gap-4 mb-4">
+          <div className="flex items-center gap-1 text-sm">
+            <Camera className="h-4 w-4" />
+            <span>Photos (up to 8MB)</span>
+          </div>
+          <div className="flex items-center gap-1 text-sm">
+            <Film className="h-4 w-4" />
+            <span>Videos (up to 1GB)</span>
+          </div>
+        </div>
+
+        <UploadDropzone<OurFileRouter, "mediaUploader">
+          endpoint="mediaUploader"
           onClientUploadComplete={() => {
             setUploadComplete(true)
-            toast.success("Photos uploaded successfully!")
+            toast.success("Media uploaded successfully!")
             router.refresh()
           }}
           onUploadError={(error: Error) => {
@@ -182,7 +194,7 @@ export function UploadForm() {
             button: "bg-primary hover:bg-primary/90 px-6 py-2.5",
           }}
           content={{
-            label: `Drop your photos here`,
+            label: `Drop your photos and videos here`,
           }}
           input={{
             name: userData.name
@@ -196,7 +208,7 @@ export function UploadForm() {
     <div className="space-y-6">
       <div>
         <h3 className="text-lg font-medium">Share Your Information</h3>
-        <p className="text-sm text-muted-foreground">Please provide your details before uploading photos</p>
+        <p className="text-sm text-muted-foreground">Please provide your details before uploading media</p>
       </div>
 
       <Form {...form}>

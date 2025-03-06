@@ -1,17 +1,29 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, Upload } from "lucide-react"
-import { getPhotos, type SortOption } from "@/lib/photos"
+import { getMedia, type SortOption, type MediaTypeFilter } from "@/lib/media"
 import { Gallery } from "@/components/gallery"
 import { GallerySorter } from "@/components/gallery-sorter"
+import type { Media } from "@/lib/types"
 
 export default async function GalleryPage({
   searchParams,
 }: {
-  searchParams: { sort?: SortOption }
+  searchParams: { 
+    sort?: SortOption 
+    type?: MediaTypeFilter
+  }
 }) {
   const sortBy = searchParams.sort || "recent"
-  const photos = await getPhotos({ sortBy })
+  const mediaType = searchParams.type || "all"
+  
+  let media: Media[] = []
+  try {
+    media = await getMedia({ sortBy, type: mediaType })
+  } catch (error) {
+    console.error("Error fetching media:", error)
+    // Continue with empty media array
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -40,9 +52,9 @@ export default async function GalleryPage({
 
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="flex justify-end mb-6">
-          <GallerySorter currentSort={sortBy} />
+          <GallerySorter currentSort={sortBy} mediaType={mediaType} />
         </div>
-        <Gallery photos={photos} />
+        <Gallery media={media} />
       </main>
 
       <footer className="bg-muted py-6">

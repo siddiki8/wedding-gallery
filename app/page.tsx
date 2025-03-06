@@ -6,25 +6,20 @@ import { ArrowRight, Camera, Heart, MessageCircle } from "lucide-react"
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="bg-white border-b py-6">
+      <header className="bg-white border-b py-4">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-3xl font-serif">Nickolas & Jasmine</h1>
-          <p className="text-muted-foreground mt-1">Wedding Gallery</p>
+          <div className="relative w-40 h-40 mx-auto">
+            <Image 
+              src="/logo.png" 
+              alt="Wedding Logo" 
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+          <p className="text-muted-foreground mt-4 text-lg">Wedding Gallery</p>
         </div>
       </header>
-
-      {/* Logo positioned just under the header line */}
-      <div className="relative -mt-6 flex justify-center">
-        <div className="relative w-28 h-28 bg-white rounded-full border-4 border-white shadow-sm">
-          <Image 
-            src="/logo.png" 
-            alt="Wedding Logo" 
-            fill
-            className="object-contain p-1"
-            priority
-          />
-        </div>
-      </div>
 
       <main className="flex-1 container mx-auto px-4 py-12 pt-8">
         <div className="max-w-4xl mx-auto text-center space-y-10">
@@ -82,7 +77,7 @@ export default function Home() {
 
       <footer className="bg-muted py-8">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-muted-foreground">Nickolas & Jasmine — June 15, 2024</p>
+          <p className="text-muted-foreground">Nickolas & Jasmine — June 28, 2025</p>
         </div>
       </footer>
     </div>
