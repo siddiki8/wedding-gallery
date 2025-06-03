@@ -18,7 +18,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: "Nickolas & Jasmine - Wedding Gallery",
-  description: "Share and view photos from our special day",
+  description: "Share and view os from our special day",
     generator: 'v0.dev'
 }
 

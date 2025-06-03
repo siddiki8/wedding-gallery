@@ -15,7 +15,7 @@ export default function UploadPage() {
             </Link>
           </Button>
           <div>
-            <h1 className="text-2xl font-serif">Upload Photos</h1>
+            <h1 className="text-2xl font-serif">Upload Media</h1>
             <p className="text-sm text-muted-foreground">Share your memories with us</p>
           </div>
         </div>

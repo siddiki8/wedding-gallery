@@ -32,11 +32,11 @@ export default function Home() {
               <div className="bg-primary/10 p-4 rounded-full">
                 <Camera className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-medium">Upload Photos</h3>
+              <h3 className="text-xl font-medium">Upload Media</h3>
               <p className="text-muted-foreground text-center">Share your favorite moments from our special day</p>
               <Button asChild className="mt-4 w-full sm:w-auto">
                 <Link href="/upload">
-                  Upload Photos <ArrowRight className="ml-2 h-4 w-4" />
+                  Upload Media <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
             </div>
