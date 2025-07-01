@@ -6,10 +6,7 @@ import { z } from "zod"
 const f = createUploadthing()
 
 export const ourFileRouter = {
-  mediaUploader: f({
-    image: { maxFileSize: "8MB", maxFileCount: 10 },
-    video: { maxFileSize: "1GB", maxFileCount: 5 }
-  })
+  mediaUploader: f(["image", "video"])
     .input(
       z.object({
         name: z.string().min(1, "Name is required"),
