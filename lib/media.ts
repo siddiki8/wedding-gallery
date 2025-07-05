@@ -14,7 +14,7 @@ export async function getMedia(options: {
   sortBy?: SortOption;
   type?: MediaTypeFilter;
 } = {}): Promise<Media[]> {
-  const { cleanupDeleted = true, sortBy = "recent", type = "all" } = options;
+  const { sortBy = "recent", type = "all" } = options;
   
   try {
     // Determine the sort order
@@ -35,41 +35,7 @@ export async function getMedia(options: {
       where,
     });
 
-    // Create an array to collect invalid media IDs
-    const invalidMediaIds: string[] = [];
-    const validMediaItems: Media[] = [];
-
-    // Check each media URL
-    for (const item of mediaItems) {
-      const isValid = await isMediaUrlValid(item.url, item.type);
-      
-      if (isValid) {
-        // Keep valid media
-        validMediaItems.push(item as unknown as Media);
-      } else {
-        // Track invalid media IDs for cleanup
-        invalidMediaIds.push(item.id);
-        console.log(`Found invalid ${item.type} URL: ${item.url} for ID: ${item.id}`);
-      }
-    }
-
-    // Optionally clean up invalid media references from database
-    if (cleanupDeleted && invalidMediaIds.length > 0) {
-      try {
-        const deleteResult = await db.media.deleteMany({
-          where: {
-            id: {
-              in: invalidMediaIds
-            }
-          }
-        });
-        console.log(`Cleaned up ${deleteResult.count} deleted media items from database`);
-      } catch (cleanupError) {
-        console.error("Error cleaning up deleted media:", cleanupError);
-      }
-    }
-
-    return validMediaItems;
+    return mediaItems as unknown as Media[];
   } catch (error) {
     console.error("Error fetching media:", error);
     return [];
